@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Great Books</title>
+    <meta charset="utf-8" />
+    <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
+    <link href="css/main.css" rel="stylesheet" />
+
+    <script src="cordova.js"></script>
+    <script src="kendo/js/jquery.min.js"></script>
+    <script src="kendo/js/kendo.mobile.min.js"></script>
+
+    <script src="js/app.js"></script>
+    <script src="js/details.js"></script>
+    <script src="js/favorites.js"></script>
+</head>
+<body>
+    <div data-role="view" id="index">
+        <div data-role="header">
+            <div data-role="navbar">
+                <span data-role="view-title"></span>
+            </div>
+        </div>
+        <ul data-role="listview" data-source="Books.data" data-template="books-template"></ul>
+    </div>
+
+    <script type="text/x-kendo-template" id="books-template">
+        <a href="views/details.html?##id=#: isbn #">
+            <div class="bookImage"><img src="#: image_url #" /></div>
+            <div class="bookTitle">#: name #</div>
+            <div class="bookAuthor">#: author #</div>
+        </a>
+    </script>
+
+    <!-- Add Tutorial Markup Here -->
+
+</body>
+</html>
