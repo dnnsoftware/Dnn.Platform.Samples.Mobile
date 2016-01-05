@@ -1,38 +1,135 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
-<head>
-    <title>Great Books</title>
-    <meta charset="utf-8" />
-    <link href="kendo/styles/kendo.mobile.all.min.css" rel="stylesheet" />
-    <link href="css/main.css" rel="stylesheet" />
 
+<head>
+    <title>DNN - JWT Proof of Concept</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="http://cdn.kendostatic.com/2015.3.930/styles/kendo.mobile.ios.min.css" />
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link href="css/main.css" rel="stylesheet" />
     <script src="cordova.js"></script>
     <script src="kendo/js/jquery.min.js"></script>
     <script src="kendo/js/kendo.mobile.min.js"></script>
-
+    <script src="http://knockoutjs.com/downloads/knockout-3.4.0.js"></script>
     <script src="js/app.js"></script>
-    <script src="js/details.js"></script>
-    <script src="js/favorites.js"></script>
 </head>
+
 <body>
-    <div data-role="view" id="index">
+    <div data-role="view" id="index" data-title="DNN">
         <div data-role="header">
-            <div data-role="navbar">
+            <div data-role="navbar" class="header">
                 <span data-role="view-title"></span>
+                <div class="buttons-container">
+                    <a class="btn btn-primary" data-bind="click: addContact, visible: isLoggedIn()">Add Contact</a>
+                    <a class="btn btn-default" id="logout" data-bind="click: logout, visible: isLoggedIn()">Logout</a>
+                </div>
             </div>
         </div>
-        <ul data-role="listview" data-source="Books.data" data-template="books-template"></ul>
-    </div>
-
-    <script type="text/x-kendo-template" id="books-template">
-        <a href="views/details.html?##id=#: isbn #">
-            <div class="bookImage"><img src="#: image_url #" /></div>
-            <div class="bookTitle">#: name #</div>
-            <div class="bookAuthor">#: author #</div>
-        </a>
-    </script>
-
-    <!-- Add Tutorial Markup Here -->
-
+        <div class="container">
+            <div id="login-form" data-bind="visible: !isLoggedIn()">
+                <form>
+                    <h3 class="text-center">JWT Proof of Concept</h3>
+                    <hr />
+                    <div class="form-group">
+                        <label for="u">Username:</label>
+                        <input class="form-control" type="text" id="u" data-bind="value: username" />
+                    </div>
+                    <div class="form-group">
+                        <label for="p">Password:</label>
+                        <input class="form-control" type="password" data-bind="value: password" />
+                    </div>
+                    <div class="form-group">
+                        <label for="p">Website URL:</label>
+                        <input class="form-control" type="text" id="url" data-bind="value: url" />
+                    </div>
+                    <div>
+                        <a class="btn btn-primary pull-right" id="login" data-bind="click: login">Login</a>
+                    </div>
+                </form>
+            </div>
+            <div id="contact-list" class="dnnContactList">
+                <div data-bind="visible: !isEditMode() && isLoggedIn()">
+                    <div class="row">
+                        <div data-bind="foreach: contactList" class="col-md-12">
+                            <div class="col-md-4">
+                                <div class="contactCard">
+                                    <div class="right">
+                                        <a data-bind="click: editContact">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                        <a data-bind="click: deleteContact">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <span data-bind="text: firstName"></span>
+                                        <span data-bind="text: lastName"></span>
+                                    </div>
+                                    <div>
+                                        <span>Email</span>
+                                        <span data-bind="text: email"></span>
+                                    </div>
+                                    <div>
+                                        <span>Phone</span>
+                                        <span data-bind="text: phone"></span>
+                                    </div>
+                                    <div>
+                                        <span>Twitter</span>
+                                        <span data-bind="text: twitter"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="editContact col-md-6 col-md-offset-3" data-bind="visible: isEditMode(), with: selectedContact">
+                    <div class="form-group">
+                        <label class="form-label">First Name</label>
+                        <input class="form-control" data-bind="value: firstName, valueUpdate: 'input', css: firstName.validationClass" />
+                        <span class="form-error" data-bind='visible: firstName.hasError, text: firstName.validationMessage'> </span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Last Name</label>
+                        <input class="form-control" data-bind="value: lastName, valueUpdate: 'input', css: lastName.validationClass" />
+                        <span class="form-error" data-bind='visible: lastName.hasError, text: lastName.validationMessage'> </span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input class="form-control" data-bind="value: email, valueUpdate: 'input', css: email.validationClass" />
+                        <span class="form-error" data-bind='visible: email.hasError, text: email.validationMessage'> </span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone</label>
+                        <input class="form-control" data-bind="value: phone, valueUpdate: 'input', css: phone.validationClass" />
+                        <span class="form-error" data-bind='visible: phone.hasError, text: phone.validationMessage'> </span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Twitter</label>
+                        <input class="form-control" data-bind="value: twitter, valueUpdate: 'input', css: twitter.validationClass" />
+                        <span class="form-error" data-bind='visible: twitter.hasError, text: twitter.validationMessage'> </span>
+                    </div>
+                    <div class="buttons">
+                        <a class="btn btn-default" href="javascript:void(0)" data-bind="click: cancel">Cancel</a>
+                        <a class="btn btn-primary" href="javascript:void(0)" data-bind="click: saveContact">Save</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12" data-bind="visible: !isEditMode() && isLoggedIn()">
+                <ul class="right pager" data-bind="visible: pagerVisible">
+                    <li>
+                        <a href="javascript:void(0)" data-bind="click: prev, attr: { 'class': pagerPrevClass }"><i class="fa fa-angle-left"></i></a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)" data-bind="click: next, attr: { 'class': pagerNextClass }"><i class="fa fa-angle-right"></i></a>
+                    </li>
+                </ul>
+                <div class="pull-left" data-bind="html: pagerDescription"></div>
+                <div class="pull-right" data-bind="html: pagerItemsDescription"></div>
+            </div>
+        </div>
+        <script src="js/contacts.js"></script>
 </body>
+
 </html>
