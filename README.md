@@ -6,8 +6,11 @@ We will be using Telerik’s App Builder platform in order to create a sample hy
 
 #Telerik App Pre-requisites
   1.)	Telerik Account – for the app builder, 30 day free trial
+  
   2.)	Clean copy of latest Platform build (as long as JWT is active)
+  
   3.)	SPA Sample Module on local platform build
+  
   4.)	Smartphone / tablet / local machine to test with after building project (optional)
 
 #Steps:
