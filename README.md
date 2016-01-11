@@ -19,7 +19,9 @@ We will be using Telerik’s App Builder platform in order to create a sample hy
   2.)	Setup telerik workspace – go through tutorials or straight into it
   
   3.)	Install & configure JWT on local platform build
+  
   a.	Go to web config file.
+  
   b.	Modify this line:
   
     <add name="JWTAuth" type="Dnn.AuthServices.Jwt.Auth.JwtAuthMessageHandler, Dnn.AuthServices.Jwt" enabled="true" defaultInclude="false" forceSSL="false" />
@@ -36,14 +38,20 @@ We will be using Telerik’s App Builder platform in order to create a sample hy
   
   4.)	Install SPA module on local build
   a.	Place on sample page
+  
   b.	Create a record or two
+  
   c.	Give it a moniker under module settings -> advanced
+  
   d.	Give it the moniker “spamodulesample”
   
   5.)	Connect mobile app to local build by calling APIs using jQuery AJAX
   a.	Grab code from Sample App – index.html, main.css, contacts.js & app.js
+  
   b.	Set up IIS bindings to allow local testing
+  
   c.	If testing on app, you want to set up the IP address binding as well.
+  
   d.	Login using url set up in IIS and see if API’s are accessed correctly
   
   6.)	Emulate / download app to test.
