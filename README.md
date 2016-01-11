@@ -37,6 +37,7 @@ We will be using Telerik’s App Builder platform in order to create a sample hy
     <add name="Access-Control-Allow-Methods" value="GET, POST, PUT, HEAD, OPTIONS" />
   
   4.)	Install SPA module on local build
+  
   a.	Place on sample page
   
   b.	Create a record or two
@@ -46,6 +47,7 @@ We will be using Telerik’s App Builder platform in order to create a sample hy
   d.	Give it the moniker “spamodulesample”
   
   5.)	Connect mobile app to local build by calling APIs using jQuery AJAX
+  
   a.	Grab code from Sample App – index.html, main.css, contacts.js & app.js
   
   b.	Set up IIS bindings to allow local testing
