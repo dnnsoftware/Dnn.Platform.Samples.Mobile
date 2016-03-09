@@ -36,7 +36,7 @@ We will be using Telerik’s App Builder platform in order to create a sample hy
       <add name="Access-Control-Allow-Headers" value="accept, accept-language, content-type, accept, authorization, moduleid, tabid, x-dnn-moniker" />
       <add name="Access-Control-Allow-Methods" value="GET, POST, PUT, HEAD, OPTIONS" />
   
-  4.)	Install SPA module on local build
+  4.)	Install SPA module on local build. Obtain the SPA module from here: https://github.com/dnnsoftware/Dnn.Platform.Samples.Mvc/tree/master/Website/Install/Module. There are 2 install packages here. Install the latest version of *SPA*, e.g. DNN_ContactList_SPA_01.00.00_Install.zip
   
     a.	Place on sample page
     
